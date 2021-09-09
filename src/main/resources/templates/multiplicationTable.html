@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>구구단 만들기_ver2</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+<div>
+	<table>
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>이름</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr> <!-- $ : 모델에 있는 값 꺼내기 -->
+				<td th:text="startRowNumber : ${startRowNumber}"></td>
+				<td th:text="item : ${item}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<script>
+		document.write("<table border = 1>");
+	    document.write("<tr>");
+	    for (k = startRowNumber; k <= endRowNumber; k++) {
+	        for (i = startRowNumber; i <= k; i++) {
+	            document.write("<td>");
+	            for (j = startColumNumber; j <= endColumNumber; j++) {
+	                var color = (i % 2 == 1) ? "<font color=blue>" : "<font color=orange>";
+	                var resultText = MultiplicationFactory.findMultiplyItem(i, j);
+	                // resultText는 하나의 아이템
+	                document.write(color + resultText + "<br/>");
+	            }
+	            document.write("</td>");
+	        }
+	        document.write("</tr>");
+	    }
+	    document.write("</table>");
+	</script>
+</div>
+</body>
+</html>
