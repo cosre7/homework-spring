@@ -1,40 +1,36 @@
 package multiplication.multiplicationspring.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.stereotype.Service;
 
 @Service
 public class MultiplicationService {
 	
-	private Map<String, Object> table = new HashMap<>();
+	private String[][] table;
 
-	// {2*1=[2 * 1 = 2], 2*2=[2 * 2 = 4], 2*3=[2 * 3 = 6], ~~}
-	public Map<String, Object> createTable(int startRowNumber, int endRowNumber, int startColumnNumber, int endColumnNumber) {
+	// createTable(2,9,1,9)[6][5] -> 6 * 5 = 30
+	public String[][] createTable(int startRowNumber, int endRowNumber, int startColumnNumber, int endColumnNumber) {
+		// 큰 범위로 배열 생성 -> rowNumber, ColumnNumber 그대로 넣어도 확인할 수 있도록 하기 위함
+		table = new String[endRowNumber+1][endColumnNumber+1]; 
 		for(int i = startRowNumber; i <= endRowNumber; i++) {
 			for(int j = startColumnNumber; j <= endColumnNumber; j++) {
-				table.put(i + "*" + j, createOperation(i, j));
+				table[i][j] = createOperation(i, j).toString();
 			}
 		}
+//		System.out.println(table.toString());
 		return table;
 	}
 
-	// [2 * 1 = 2] 
-	public List<String> createOperation(int rowNumber, int columnNumber) {
+	// createOperation(2,9) -> 2 * 9 = 18
+	public String createOperation(int rowNumber, int columnNumber) {
 		int result = rowNumber * columnNumber;
-		List<String> operation = new ArrayList<>();
-		operation.add(rowNumber + " * " + columnNumber + " = " + result);
+//		List<String> operation = new ArrayList<>();
+//		operation.add();
+		String operation = rowNumber + " * " + columnNumber + " = " + result;
 		return operation;
 	}
-		
-	// 2,2 -> [2 * 2 = 4]
-	public Object findItem(int rowNumber, int columnNumber) {
-		String result = rowNumber + "*" + columnNumber;
-		return table.get(result);
+	
+	// findOne(6,5) -> 6 * 5 = 30
+	public String findOne(int rowNumber, int ColumnNumber) {
+		return table[rowNumber][ColumnNumber];
 	}
-	
-	
 }

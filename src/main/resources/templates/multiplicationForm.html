@@ -5,14 +5,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-    <form method="post">
+    <form action="/table">
         <fieldset>
             <label for="startRowNumber">첫 단 : </label> 
-            <input id="startRowNumber" ><br/>
+            <input id="startRowNumber" name="startRowNumber"><br/>
             <label for="endRowNumber">마지막 단 : </label>
-            <input id="endRowNumber"><br/>
-            <label for="endColumNumber">마지막 곱할 수 : </label>
-            <input id="endColumNumber"><br/>
+            <input id="endRowNumber" name="endRowNumber"><br/>
+            <label for="endColumnNumber">마지막 곱할 수 : </label>
+            <input id="endColumnNumber" name="endColumnNumber"><br/>
             <input type = "submit" value = "계산하기">
         </fieldset>
     </form>

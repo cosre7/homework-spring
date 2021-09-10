@@ -1,10 +1,14 @@
 package multiplication.multiplicationspring.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import multiplication.multiplicationspring.domain.Multiplication;
 import multiplication.multiplicationspring.service.MultiplicationService;
@@ -24,23 +28,8 @@ public class MultiplicationController {
 		return "multiplicationForm";
 	}
 	
-	@PostMapping("/")
-	public String create(MultiplicationForm form, Model model) {
-		Multiplication multiplication = new Multiplication();
-		int startRowNumber = form.getStartRowNumber();
-		int endRowNumber = form.getEndRowNumber();
-		int startColumnNumber = 1;
-		int endColumnNumber = form.getEndColumnNumber();
-		multiplicationService.createTable(startRowNumber, endRowNumber, startColumnNumber, endColumnNumber);
-		multiplication.setStartRowNumber(startRowNumber);
-		multiplication.setEndRowNumber(endRowNumber);
-		multiplication.setStartColumnNumber(startColumnNumber);
-		multiplication.setEndColumnNumber(endColumnNumber);
-		
-		Object item = multiplicationService.findItem(startRowNumber, startColumnNumber);
-		model.addAttribute("item", item);
-		model.addAttribute("startRowNumber", startRowNumber);
-		System.out.println(startRowNumber);
+	@GetMapping("/table")
+	public String create(int startRowNumber, int endRowNumber, int endColumnNumber) {
 		return "multiplicationTable";
 	}
 }
