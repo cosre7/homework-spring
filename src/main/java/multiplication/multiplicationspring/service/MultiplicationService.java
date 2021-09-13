@@ -16,21 +16,18 @@ public class MultiplicationService {
 				table[i][j] = createOperation(i, j).toString();
 			}
 		}
-//		System.out.println(table.toString());
 		return table;
 	}
 
 	// createOperation(2,9) -> 2 * 9 = 18
 	public String createOperation(int rowNumber, int columnNumber) {
 		int result = rowNumber * columnNumber;
-//		List<String> operation = new ArrayList<>();
-//		operation.add();
 		String operation = rowNumber + " * " + columnNumber + " = " + result;
 		return operation;
 	}
 	
-	// findOne(6,5) -> 6 * 5 = 30
-	public String findOne(int rowNumber, int ColumnNumber) {
-		return table[rowNumber][ColumnNumber];
-	}
+//	// findOne(6,5) -> 6 * 5 = 30
+//	public String findOne(int rowNumber, int ColumnNumber) {
+//		return table[rowNumber][ColumnNumber];
+//	}
 }
