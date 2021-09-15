@@ -14,6 +14,11 @@ public class MultiplicationController {
 
 	@Autowired
 	MultiplicationService multiplicationService;
+	//= MultiplicationService.getInstance();
+//	MultiplicationService multiplicationService2 = MultiplicationService.getInstance();
+//	MultiplicationService multiplicationService = new MultiplicationService(); // -> 생성자가 private이기 때문에 접근 불가
+//	MultiplicationService multiplicationService2 = new MultiplicationService();
+	
 	
 	@GetMapping("/")
 	public String createForm() {
@@ -33,7 +38,7 @@ public class MultiplicationController {
 		model.addAttribute("multiplication", multiplication);
 		model.addAttribute("startColumnNumber", startColumnNumber);
 		model.addAttribute("table", table);
-		
+//		Assertions.assertThat(multiplicationService).isSameAs(multiplicationService2); // test실행
 		return "multiplicationTable";
 	}
 }
