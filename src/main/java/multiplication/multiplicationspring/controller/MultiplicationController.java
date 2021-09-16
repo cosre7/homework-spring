@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.gson.Gson;
 
 import multiplication.multiplicationspring.domain.Multiplication;
 import multiplication.multiplicationspring.service.MultiplicationService;
@@ -14,18 +17,14 @@ public class MultiplicationController {
 
 	@Autowired
 	MultiplicationService multiplicationService;
-	//= MultiplicationService.getInstance();
-//	MultiplicationService multiplicationService2 = MultiplicationService.getInstance();
-//	MultiplicationService multiplicationService = new MultiplicationService(); // -> 생성자가 private이기 때문에 접근 불가
-//	MultiplicationService multiplicationService2 = new MultiplicationService();
-	
 	
 	@GetMapping("/")
 	public String createForm() {
 		return "thymeleaf/multiplicationForm";
 	}
-
-	@PostMapping("/table")
+	
+	@PostMapping("/")
+	@ResponseBody
 	public String create(Multiplication multiplication, Model model) {
 		
 		int startColumnNumber = 1; // 첫번째 곱해지는 수
@@ -39,6 +38,11 @@ public class MultiplicationController {
 		model.addAttribute("startColumnNumber", startColumnNumber);
 		model.addAttribute("table", table);
 //		Assertions.assertThat(multiplicationService).isSameAs(multiplicationService2); // test실행
-		return "multiplicationTable";
+		
+		Gson gson = new Gson();
+		String gsonString = gson.toJson(table);
+		
+		// 리턴값에는 함수값 주지 말자!
+		return gsonString;
 	}
 }

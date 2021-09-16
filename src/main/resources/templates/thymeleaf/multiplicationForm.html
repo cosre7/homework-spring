@@ -5,7 +5,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <body>
-    <form action="/table" method="post">
+<div id="inputDiv">
+    <form method="post">
         <fieldset>
             <label for="startRowNumber">첫 단 : </label> 
             <input id="startRowNumber" name="startRowNumber"><br/>
@@ -13,8 +14,66 @@
             <input id="endRowNumber" name="endRowNumber"><br/>
             <label for="endColumnNumber">마지막 곱할 수 : </label>
             <input id="endColumnNumber" name="endColumnNumber"><br/>
-            <input type = "submit" value = "계산하기">
+            <button type = "button" onclick="dataSend()">계산3</button>
         </fieldset>
     </form>
+</div>
+<div id="resultDiv">
+
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
+<script>
+	function dataSend() {
+		var param = { 
+				startRowNumber : Number($("#startRowNumber").val()),
+				endRowNumber : Number($("#endRowNumber").val()),
+				startColumnNumber : Number("1"),
+				endColumnNumber : Number($("#endColumnNumber").val())
+		};
+		if(param.startRowNumber > param.endRowNumber) {
+			alert("첫째 단이 마지막 단보다 작아야 합니다.");
+		}
+
+		$.ajax({
+			url : "/",
+			data : param,
+			type : "POST",
+			}).done(function(tableValue) {
+				$("#resultDiv").append(printMultiplicationTable(tableValue));
+		});
+	}
+	
+	function printMultiplicationTable(tableValue) {
+		var param = { 
+				startRowNumber : Number($("#startRowNumber").val()),
+				endRowNumber : Number($("#endRowNumber").val()),
+				startColumnNumber : Number("1"),
+				endColumnNumber : Number($("#endColumnNumber").val())
+		};
+		console.log(param.startRowNumber);
+		var value = JSON.parse(tableValue);
+		console.log(value);
+		document.write("<table border = 1>");
+	    document.write("<tr>");
+	    for (k = param.startRowNumber; k <= param.endRowNumber; k++) {
+	        for (i = param.startRowNumber; i <= k; i++) {
+	            document.write("<td>");
+	            for (j = param.startColumnNumber; j <= param.endColumnNumber; j++) {
+	                var color = (i % 2 == 1) ? "<font color=blue>" : "<font color=orange>";
+	                // resultText는 하나의 아이템
+	                console.log(value[i][j]);
+	                document.write(color + value[i][j] + "<br/>");
+	            }
+	            document.write("</td>");
+	        }
+	        document.write("</tr>");
+	    }
+	    document.write("</table>");
+	}
+
+
+</script>
 </body>
 </html>
