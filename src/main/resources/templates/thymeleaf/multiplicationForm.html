@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>구구단 만들기_ver2</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
+
 <body>
-<div id="inputDiv">
+
+<div>
     <form method="post">
         <fieldset>
             <label for="startRowNumber">첫 단 : </label> 
@@ -14,63 +16,68 @@
             <input id="endRowNumber" name="endRowNumber"><br/>
             <label for="endColumnNumber">마지막 곱할 수 : </label>
             <input id="endColumnNumber" name="endColumnNumber"><br/>
-            <button type = "button" onclick="dataSend()">계산3</button>
+            <button type="button">계산</button>
         </fieldset>
     </form>
 </div>
-<div id="resultDiv">
 
-</div>
+<div id="resultDiv"></div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
 <script>
-	function dataSend() {
-		var param = { 
-				startRowNumber : Number($("#startRowNumber").val()),
-				endRowNumber : Number($("#endRowNumber").val()),
-				startColumnNumber : Number("1"),
-				endColumnNumber : Number($("#endColumnNumber").val())
+	
+	$("button").click(function () {  // button을 클릭하면 실행되는 함수
+		
+		var param = { // param으로 인풋값들을 받는다.
+				'startRowNumber' : Number($("#startRowNumber").val()),
+				'endRowNumber' : Number($("#endRowNumber").val()),
+				'startColumnNumber' : Number("1"),
+				'endColumnNumber' : Number($("#endColumnNumber").val())
 		};
 		if(param.startRowNumber > param.endRowNumber) {
 			alert("첫째 단이 마지막 단보다 작아야 합니다.");
 		}
-
+	
 		$.ajax({
 			url : "/",
 			data : param,
-			type : "POST",
-			}).done(function(tableValue) {
-				$("#resultDiv").append(printMultiplicationTable(tableValue));
+			type : "POST", // post방식의 "/" url로 param 데이터를 넘긴다. 
+			success : function(tableValue) { 
+				// 데이터를 넘기는 것을 성공하면 return 값을 tableValue로 받고 실행
+				printMultiplicationTable(tableValue);  // 함수 호출
+			}
+		
 		});
-	}
+	});
 	
 	function printMultiplicationTable(tableValue) {
-		var param = { 
+		var param = { // 위와 같은 변수 -> 수정 필요
 				startRowNumber : Number($("#startRowNumber").val()),
 				endRowNumber : Number($("#endRowNumber").val()),
 				startColumnNumber : Number("1"),
 				endColumnNumber : Number($("#endColumnNumber").val())
 		};
-		console.log(param.startRowNumber);
-		var value = JSON.parse(tableValue);
-		console.log(value);
-		document.write("<table border = 1>");
-	    document.write("<tr>");
+		var value = JSON.parse(tableValue); // 컨트롤러에서 보낸 String을 JSON 형태로 받는다.
+		var src = "";
+		
+		src += "<table border = 1>";
+		src += "<tr>";
 	    for (k = param.startRowNumber; k <= param.endRowNumber; k++) {
 	        for (i = param.startRowNumber; i <= k; i++) {
-	            document.write("<td>");
+	        	src += "<td>";
 	            for (j = param.startColumnNumber; j <= param.endColumnNumber; j++) {
 	                var color = (i % 2 == 1) ? "<font color=blue>" : "<font color=orange>";
-	                // resultText는 하나의 아이템
-	                console.log(value[i][j]);
-	                document.write(color + value[i][j] + "<br/>");
+	                src += color + value[i][j] + "<br/>";
 	            }
-	            document.write("</td>");
+	            src += "</td>";
 	        }
-	        document.write("</tr>");
+	        src += "</tr>";
 	    }
-	    document.write("</table>");
+	    src += "</table>";
+		   
+		// id resultDiv의 영역에 결과를 출력한다.
+	    $("#resultDiv").html(src); // html 
 	}
 
 
