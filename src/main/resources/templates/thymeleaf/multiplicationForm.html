@@ -28,13 +28,13 @@
 <script>
 	
 	$("button").click(function () {  // button을 클릭하면 실행되는 함수
-		
-		var param = { // param으로 인풋값들을 받는다.
+		param = { // param으로 인풋값들을 받는다.
 				'startRowNumber' : Number($("#startRowNumber").val()),
 				'endRowNumber' : Number($("#endRowNumber").val()),
 				'startColumnNumber' : Number("1"),
 				'endColumnNumber' : Number($("#endColumnNumber").val())
 		};
+		
 		if(param.startRowNumber > param.endRowNumber) {
 			alert("첫째 단이 마지막 단보다 작아야 합니다.");
 		}
@@ -45,19 +45,13 @@
 			type : "POST", // post방식의 "/" url로 param 데이터를 넘긴다. 
 			success : function(tableValue) { 
 				// 데이터를 넘기는 것을 성공하면 return 값을 tableValue로 받고 실행
-				printMultiplicationTable(tableValue);  // 함수 호출
+				printMultiplicationTable(tableValue, param);  // 함수 호출
 			}
 		
 		});
 	});
 	
-	function printMultiplicationTable(tableValue) {
-		var param = { // 위와 같은 변수 -> 수정 필요
-				startRowNumber : Number($("#startRowNumber").val()),
-				endRowNumber : Number($("#endRowNumber").val()),
-				startColumnNumber : Number("1"),
-				endColumnNumber : Number($("#endColumnNumber").val())
-		};
+	function printMultiplicationTable(tableValue, param) {
 		var value = JSON.parse(tableValue); // 컨트롤러에서 보낸 String을 JSON 형태로 받는다.
 		var src = "";
 		
