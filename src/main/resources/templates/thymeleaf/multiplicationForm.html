@@ -6,7 +6,6 @@
 </head>
 
 <body>
-
 <div>
     <form method="post">
         <fieldset>
@@ -27,8 +26,8 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
 <script>
 	
-	$("button").click(function () {  // button을 클릭하면 실행되는 함수
-		param = { // param으로 인풋값들을 받는다.
+	$("button").on('click', function () {  // button을 클릭하면 실행되는 함수
+		var param = { // param으로 인풋값들을 받는다.
 				'startRowNumber' : Number($("#startRowNumber").val()),
 				'endRowNumber' : Number($("#endRowNumber").val()),
 				'startColumnNumber' : Number("1"),
@@ -70,10 +69,9 @@
 	    }
 	    src += "</table>";
 		   
-		// id resultDiv의 영역에 결과를 출력한다.
-	    $("#resultDiv").html(src); // html 
+		// div 태그의 id="resultDiv" 영역에 결과를 출력한다.
+	    $("#resultDiv").html(src); 
 	}
-
 
 </script>
 </body>
